@@ -1093,7 +1093,7 @@ struct mpq_archive_file_reader {
 		};
 
 		size_t current_sector_size = sector_data.size();
-		if (current_sector == compressed_sectors.size() - 2) current_sector_size = be.size % sector_size;
+		if (current_sector == compressed_sectors.size() - 2 && be.size % sector_size) current_sector_size = be.size % sector_size;
 
 		if (sector_data_size == current_sector_size && sector_data_size <= sector_size) {
 			if (be.flags & 0x10000) make_encrypted_reader(r, sector_data_size, key + (uint32_t)current_sector, crypt_table).get_bytes(sector_data.data(), sector_data_size);
